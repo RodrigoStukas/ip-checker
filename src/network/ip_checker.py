@@ -1,25 +1,26 @@
 import socket
 import psutil
 
-def obter_ips():
-    ips = []
-    for interface, addrs in psutil.net_if_addrs().items():
-        for addr in addrs:
-            if addr.family == socket.AF_INET:  # IPv4
-                ips.append(addr.address)
-    return ips
-
 def obter_hostname():
     return socket.gethostname()
 
 def obter_ip_redecorp():
-    ips = obter_ips()
-    redecorp_ips = [ip for ip in ips if ip.startswith("192.168.10.")]
-    return redecorp_ips[0] if redecorp_ips else None
+    for interface, addrs in psutil.net_if_addrs().items():
+        # Verifica se a interface tem info de DNS
+        info = psutil.net_if_stats().get(interface)
+        # psutil não traz diretamente o sufixo DNS, mas podemos filtrar pelo nome da interface
+        # ou pelo IP. Como você quer pelo sufixo DNS, vamos usar ipconfig via socket.getfqdn
+        fqdn = socket.getfqdn()
+        if "redecorp" in fqdn.lower():
+            for addr in addrs:
+                if addr.family == socket.AF_INET:  # IPv4
+                    return addr.address
+    return None
 
 def verificar_ip():
     ip = obter_ip_redecorp()
+    hostname = obter_hostname()
     if ip:
-        return f"IP: {ip}"
+        return f"Computador: {hostname}\nIP Corporativo: {ip}"
     else:
-        return "⚠️ Ligue a VPN para obter IP corporativo"
+        return f"Computador: {hostname}\n⚠️ Ligue a VPN para obter IP corporativo"
