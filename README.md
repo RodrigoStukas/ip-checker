@@ -30,3 +30,11 @@ Se não houver IP da rede corporativa, o programa alerta para ligar a VPN.
 ```bash
 git clone https://github.com/seuusuario/ip-checker.git
 cd ip-checker
+
+## ▶️ Executar o projeto
+
+Com o terminal aberto na raiz do projeto, execute:
+
+```bash
+python -m src.main
+
