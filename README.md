@@ -1,148 +1,121 @@
 # 📡 IP Checker
 
-Um utilitário simples em Python que exibe um \*\*widget flutuante\*\* mostrando o \*\*IP corporativo\*\* da máquina.
-
-Caso nenhum IP corporativo seja detectado, o sistema exibe um alerta solicitando a ativação da \*\*VPN\*\*.
+Um utilitário simples em Python que exibe um **widget flutuante** mostrando o **IP corporativo** da máquina.  
+Caso nenhum IP corporativo seja detectado, o sistema exibe um alerta solicitando a ativação da **VPN**.
 
 ---
 
 ## 🚀 Funcionalidades
 
-- Detecta e exibe o \*\*IP corporativo\*\* em tempo real
-
-- Widget flutuante em formato de \*\*bolinha\*\*
-
-- Widget \*\*arrastável\*\* pela tela
-
+- Detecta e exibe o **IP corporativo** em tempo real
+- Widget flutuante em formato de **bolinha**
+- Widget **arrastável** pela tela
 - Clique para abrir uma janela com:
-
-- Hostname da máquina
-
-- IP corporativo detectado
-
-- Botão para \*\*copiar o IP\*\* para a área de transferência
-
+  - Hostname da máquina
+  - IP corporativo detectado
+- Botão para **copiar o IP** para a área de transferência
 - Alerta automático quando não estiver conectado à rede corporativa
 
 ---
 
 ## 📦 Requisitos
 
-- \*\*Python 3.10 ou superior\*\*
+- **Python 3.10 ou superior**
 
 ### Bibliotecas externas
-
 - `psutil` — coleta informações de rede
-
 - `Pillow` — manipulação de imagens
 
 ### Bibliotecas padrão do Python
 
-- `tkinter`
+- `tkinter`  
+  > Em algumas distribuições Linux pode ser necessário instalar manualmente:
+  ```bash sudo apt-get install python3-tk
 
-> Em algumas distribuições Linux pode ser necessário instalar manualmente:
+- socket
 
-`sudo apt-get install python3-tk`
+- os
 
-- `socket`
+- unittest
 
-- `os`
+### 📄 requirements.txt
 
-- `unittest`
+Conteúdo do arquivo requirements.txt:
 
----
+psutil
+Pillow
 
-## 🔧 Instalação
+### 🔧 Instalação
 
-### 1️⃣ Clone o repositório
+## 1️⃣ Clonar o repositório
 
-```bash
-
-git clone https://github.com/seuusuario/ip-checker.git
-
+git clone https://github.com/RodrigoStukas/ip-checker
 cd ip-checker
 
-2️⃣ Instale as dependências
+## 2️⃣ Instalar dependências
 
 pip install -r requirements.txt
-
-Ou instale manualmente:
-
+Ou manualmente:
 pip install psutil Pillow
 
-▶️ Executar o Projeto
-
-Com o terminal aberto na raiz do projeto, execute:
+### ▶️ Executar o projeto
+Com o terminal aberto na raiz do projeto:
 
 python -m src.main
-
-
-🧪 Testes
-
+### 🧪 Testes
 Para executar os testes unitários:
 
 python -m unittest discover -s tests
 
-
-📂 Estrutura do Projeto
+### 📂 Estrutura do Projeto
 
 ip-checker/
-
 │
-
-├── assets/ # Ícones e imagens
-
+├── assets/                 # Ícones e imagens
+│
 ├── src/
-
-│ ├── network/
-
-│ │ └── ip\_checker.py # Funções de rede (hostname, IP corporativo, etc.)
-
-│ ├── ui/
-
-│ │ └── popup.py # Interface gráfica (widget flutuante)
-
-│ └── main.py # Ponto de entrada do programa
-
+│   ├── network/
+│   │   └── ip_checker.py   # Funções de rede (hostname, IP corporativo, etc.)
+│   ├── ui/
+│   │   └── popup.py        # Interface gráfica (widget flutuante)
+│   └── main.py             # Ponto de entrada do programa
 │
-
 ├── tests/
-
-│ └── test\_ip\_checker.py # Testes unitários
-
+│   └── test_ip_checker.py  # Testes unitários
 │
+├── requirements.txt        # Dependências
+└── README.md               # Documentação
 
-├── requirements.txt # Dependências do projeto
+### 📌 Observações
 
-└── README.md # Documentação
+São considerados IPs corporativos:
 
+Endereços iniciados com 10.
 
-📌 Observações
+Endereços iniciados com 172.21.
 
-O sistema considera IP corporativo os endereços que começam com:
-
-10.
-
-172.21.
-
-Caso nenhum IP válido seja encontrado, um aviso para ligar a VPN será exibido
+Caso nenhum IP válido seja encontrado, o sistema exibirá um aviso para ligar a VPN
 
 O widget é transparente, leve e pode ser movido livremente pela tela
 
+### 🖼️ Exemplo de Uso
 
-🖼️ Exemplo de Uso
-
-Ao executar o programa, um ícone flutuante aparecerá na tela
+Ao executar o programa, um ícone flutuante aparece na tela
 
 Clique para abrir a janela de informações
 
 Botão para copiar o IP
 
-Menu com opções Abrir e Sair
+Opções de Abrir e Sair
 
+### 🛠️ Contribuição
 
-📄 Licença
+Contribuições são bem-vindas!
+Sinta-se à vontade para abrir issues ou enviar pull requests.
+
+### 📄 Licença
 
 Este projeto está sob a licença MIT.
-
 Consulte o arquivo LICENSE para mais detalhes.
+
+
