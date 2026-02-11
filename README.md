@@ -32,7 +32,8 @@ Caso nenhum IP corporativo seja detectado, o sistema exibe um alerta solicitando
   > Em algumas distribuições Linux pode ser necessário instalar manualmente:
   
   
-  ```sudo apt-get install python3-tk
+  ```bash 
+   ```sudo apt-get install python3-tk
 
 ---
 - socket
@@ -80,27 +81,6 @@ python -m src.main
 Para executar os testes unitários:
 
 python -m unittest discover -s tests
-
----
-
-## 📂 Estrutura do Projeto
-
-ip-checker/
-│
-├── assets/                 # Ícones e imagens
-│
-├── src/
-│   ├── network/
-│   │   └── ip_checker.py   # Funções de rede (hostname, IP corporativo, etc.)
-│   ├── ui/
-│   │   └── popup.py        # Interface gráfica (widget flutuante)
-│   └── main.py             # Ponto de entrada do programa
-│
-├── tests/
-│   └── test_ip_checker.py  # Testes unitários
-│
-├── requirements.txt        # Dependências
-└── README.md               # Documentação
 
 ---
 
