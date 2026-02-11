@@ -58,6 +58,8 @@ Pillow
 ### 1️⃣ Clonar o repositório
 
 git clone https://github.com/RodrigoStukas/ip-checker
+
+#### Abrir no terminal:
 cd ip-checker
 
 ---
