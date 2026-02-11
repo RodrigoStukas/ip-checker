@@ -1,22 +1,21 @@
 import socket
 import psutil
-
+ 
 def obter_hostname():
     return socket.gethostname()
-
+ 
 def obter_ip_redecorp():
+    ips_validos = []
     for interface, addrs in psutil.net_if_addrs().items():
-        # Verifica se a interface tem info de DNS
-        info = psutil.net_if_stats().get(interface)
-        # psutil não traz diretamente o sufixo DNS, mas podemos filtrar pelo nome da interface
-        # ou pelo IP. Como você quer pelo sufixo DNS, vamos usar ipconfig via socket.getfqdn
-        fqdn = socket.getfqdn()
-        if "redecorp" in fqdn.lower():
-            for addr in addrs:
-                if addr.family == socket.AF_INET:  # IPv4
-                    return addr.address
-    return None
-
+        for addr in addrs:
+            if addr.family == socket.AF_INET:  
+                ip = addr.address
+                
+                if ip.startswith("10.") or ip.startswith("172.21."):
+                    ips_validos.append(ip)
+    
+    return ips_validos[0] if ips_validos else None
+ 
 def verificar_ip():
     ip = obter_ip_redecorp()
     hostname = obter_hostname()
