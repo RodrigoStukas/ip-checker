@@ -30,13 +30,18 @@ Caso nenhum IP corporativo seja detectado, o sistema exibe um alerta solicitando
 
 - `tkinter`  
   > Em algumas distribuições Linux pode ser necessário instalar manualmente:
-  ```bash sudo apt-get install python3-tk
+  
+  
+  ```sudo apt-get install python3-tk
 
+---
 - socket
 
 - os
 
 - unittest
+
+---
 
 ### 📄 requirements.txt
 
@@ -45,29 +50,40 @@ Conteúdo do arquivo requirements.txt:
 psutil
 Pillow
 
-### 🔧 Instalação
+---
 
-## 1️⃣ Clonar o repositório
+## 🔧 Instalação
+
+### 1️⃣ Clonar o repositório
 
 git clone https://github.com/RodrigoStukas/ip-checker
 cd ip-checker
 
-## 2️⃣ Instalar dependências
+---
+
+### 2️⃣ Instalar dependências
 
 pip install -r requirements.txt
 Ou manualmente:
 pip install psutil Pillow
 
-### ▶️ Executar o projeto
+---
+
+## ▶️ Executar o projeto
 Com o terminal aberto na raiz do projeto:
 
 python -m src.main
-### 🧪 Testes
+
+---
+
+## 🧪 Testes
 Para executar os testes unitários:
 
 python -m unittest discover -s tests
 
-### 📂 Estrutura do Projeto
+---
+
+## 📂 Estrutura do Projeto
 
 ip-checker/
 │
@@ -86,7 +102,9 @@ ip-checker/
 ├── requirements.txt        # Dependências
 └── README.md               # Documentação
 
-### 📌 Observações
+---
+
+## 📌 Observações
 
 São considerados IPs corporativos:
 
@@ -98,7 +116,9 @@ Caso nenhum IP válido seja encontrado, o sistema exibirá um aviso para ligar a
 
 O widget é transparente, leve e pode ser movido livremente pela tela
 
-### 🖼️ Exemplo de Uso
+---
+
+## 🖼️ Exemplo de Uso
 
 Ao executar o programa, um ícone flutuante aparece na tela
 
@@ -108,14 +128,18 @@ Botão para copiar o IP
 
 Opções de Abrir e Sair
 
-### 🛠️ Contribuição
+---
+
+## 🛠️ Contribuição
 
 Contribuições são bem-vindas!
 Sinta-se à vontade para abrir issues ou enviar pull requests.
 
-### 📄 Licença
+---
+
+## 📄 Licença
 
 Este projeto está sob a licença MIT.
 Consulte o arquivo LICENSE para mais detalhes.
 
-
+---
