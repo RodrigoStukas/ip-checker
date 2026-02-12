@@ -112,13 +112,6 @@ Opções de Abrir e Sair
 
 ---
 
-## 🛠️ Contribuição
-
-Contribuições são bem-vindas!
-Sinta-se à vontade para abrir issues ou enviar pull requests.
-
----
-
 ## 📄 Licença
 
 Este projeto está sob a licença MIT.
