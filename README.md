@@ -78,6 +78,7 @@ Pasta Setup
 Instalador: IPCheckerSetup
 
 Executavel: ipchecker
+
 ---
 
 ## ▶️ Executar o projeto
