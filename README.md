@@ -72,6 +72,14 @@ pip install psutil Pillow
 
 ---
 
+### ▶️ Instalar o .exe do projeto
+Pasta Setup
+
+Instalador: IPCheckerSetup
+
+Executavel: ipchecker
+---
+
 ## ▶️ Executar o projeto
 Com o terminal aberto na raiz do projeto:
 
@@ -116,12 +124,5 @@ Opções de Abrir e Sair
 
 Contribuições são bem-vindas!
 Sinta-se à vontade para abrir issues ou enviar pull requests.
-
----
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT.
-Consulte o arquivo LICENSE para mais detalhes.
 
 ---

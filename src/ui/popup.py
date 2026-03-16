@@ -1,15 +1,20 @@
 import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk
-import os
+import os, sys
 from src.network.ip_checker import obter_hostname, obter_ip_redecorp, verificar_ip
- 
+
+def resource_path(relative_path):
+    """Retorna o caminho correto do recurso, mesmo empacotado no .exe"""
+    if hasattr(sys, "_MEIPASS"):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+
 class WidgetIP:
     def __init__(self, root):
         self.root = root
         self.root.title("IP Checker")
- 
-        
+
         self.size = 40
         self.root.geometry(f"{self.size}x{self.size}")
         self.root.configure(bg="white")
@@ -17,37 +22,32 @@ class WidgetIP:
         self.root.attributes("-topmost", True)
         self.root.overrideredirect(True)
         self.root.attributes("-transparentcolor", "white")
- 
-        
+
         self.x = self.root.winfo_screenwidth() - self.size - 20
         self.y = self.root.winfo_screenheight() - self.size - 80
         self.root.geometry(f"{self.size}x{self.size}+{int(self.x)}+{int(self.y)}")
- 
-        
+
         self.drag_start_x = 0
         self.drag_start_y = 0
         self.is_dragging = False
- 
-       
+
         self.canvas = tk.Canvas(self.root, width=self.size, height=self.size,
                                 bg="white", highlightthickness=0, cursor="hand2")
         self.canvas.pack(fill="both", expand=True)
- 
-        
+
         self.carregar_imagem()
- 
-        
+
+        # binds
         self.canvas.bind("<Button-1>", self.on_press)
         self.canvas.bind("<B1-Motion>", self.on_drag)
         self.canvas.bind("<ButtonRelease-1>", self.on_release)
         self.canvas.bind("<Double-1>", self.abrir_janela_info)
         self.canvas.bind("<Button-3>", self.mostrar_menu)
- 
-        
+
         self.atualizar()
- 
+
     def carregar_imagem(self):
-        img_path = os.path.join(os.path.dirname(__file__), '..', '..', 'assets', 'ip_icon.png')
+        img_path = resource_path("assets/ip_icon.png")
         try:
             img = Image.open(img_path).convert("RGBA")
             img = img.resize((self.size, self.size), Image.Resampling.LANCZOS)
@@ -57,39 +57,39 @@ class WidgetIP:
             print(f"Erro ao carregar imagem: {e}")
             self.canvas.create_text(self.size // 2, self.size // 2, text="?",
                                     font=("Arial", 14, "bold"), fill="red")
- 
+
     def atualizar(self):
         self.root.after(10000, self.atualizar)
- 
+
     def on_press(self, event):
         self.drag_start_x = event.x_root - self.root.winfo_x()
         self.drag_start_y = event.y_root - self.root.winfo_y()
         self.is_dragging = False
- 
+
     def on_drag(self, event):
         self.is_dragging = True
         x = event.x_root - self.drag_start_x
         y = event.y_root - self.drag_start_y
         self.root.geometry(f"+{x}+{y}")
- 
+
     def on_release(self, event):
         if not self.is_dragging:
             self.abrir_janela_info(event)
- 
+
     def abrir_janela_info(self, event=None):
         ip_redecorp = obter_ip_redecorp()
         hostname = obter_hostname()
- 
+
         janela = tk.Toplevel(self.root)
         janela.title("Informações de Rede")
         janela.geometry("550x400")
         janela.resizable(False, False)
         janela.configure(bg="#f5f5f5")
- 
+
         frame_titulo = tk.Frame(janela, bg="#f5f5f5")
         frame_titulo.pack(pady=10)
- 
-        img_path = os.path.join(os.path.dirname(__file__), '..', '..', 'assets', 'ip_icon.png')
+
+        img_path = resource_path("assets/ip_icon.png")
         try:
             img = Image.open(img_path).resize((80, 80), Image.Resampling.LANCZOS)
             img_tk = ImageTk.PhotoImage(img)
@@ -98,31 +98,31 @@ class WidgetIP:
             img_label.pack()
         except Exception as e:
             print(f"Erro ao carregar imagem: {e}")
- 
+
         titulo = tk.Label(frame_titulo, text="📊 Informações da Máquina",
                           font=("Arial", 14, "bold"), bg="#f5f5f5", fg="#333")
         titulo.pack(pady=5)
- 
+
         if ip_redecorp:
             frame_info = tk.LabelFrame(janela, text="Dados da Rede Corporativa",
                                        font=("Arial", 11, "bold"), bg="white", padx=15, pady=15)
             frame_info.pack(fill="both", expand=True, padx=10, pady=5)
- 
+
             tk.Label(frame_info, text=f"Computador: {hostname}", font=("Arial", 11),
                      bg="white", justify="left").pack(anchor="w", pady=5)
             tk.Label(frame_info, text=f"IP Corporativo: {ip_redecorp}",
                      font=("Courier", 12, "bold"), bg="white", fg="#4CAF50",
                      justify="left").pack(anchor="w", pady=5)
- 
+
             frame_botoes = tk.Frame(janela, bg="#f5f5f5")
             frame_botoes.pack(fill="x", padx=10, pady=10)
- 
+
             btn_copiar = tk.Button(frame_botoes, text="📋 Copiar Hostname + IP",
                                    command=lambda: self.copiar_ip(ip_redecorp, hostname),
                                    bg="#2196F3", fg="white", font=("Arial", 10, "bold"),
                                    padx=15, pady=8)
             btn_copiar.pack(side="left", padx=5)
- 
+
             btn_fechar = tk.Button(frame_botoes, text="❌ Fechar", command=janela.destroy,
                                    bg="#f44336", fg="white", font=("Arial", 10, "bold"),
                                    padx=15, pady=8)
@@ -131,7 +131,7 @@ class WidgetIP:
             frame_aviso = tk.LabelFrame(janela, text="⚠️ Aviso",
                                         font=("Arial", 11, "bold"), bg="#fff3cd", padx=15, pady=15)
             frame_aviso.pack(fill="both", expand=True, padx=10, pady=5)
- 
+
             tk.Label(frame_aviso, text=f"Computador: {hostname}", font=("Arial", 11),
                      bg="#fff3cd", justify="left").pack(anchor="w", pady=5)
             tk.Label(frame_aviso, text="Nenhum IP corporativo detectado",
@@ -140,18 +140,18 @@ class WidgetIP:
             tk.Label(frame_aviso, text="Ligue a VPN para obter IP da rede corporativa",
                      font=("Arial", 10), bg="#fff3cd", fg="#856404",
                      justify="center").pack(pady=5)
- 
+
             btn_fechar = tk.Button(janela, text="❌ Fechar", command=janela.destroy,
                                    bg="#f44336", fg="white", font=("Arial", 10, "bold"),
                                    padx=15, pady=8)
             btn_fechar.pack(pady=10)
- 
+
     def copiar_ip(self, ip, hostname):
         self.root.clipboard_clear()
         self.root.clipboard_append(f"Computador: {hostname}\nIP Corporativo: {ip}")
         messagebox.showinfo("Sucesso",
                             f"Hostname e IP copiados para a área de transferência:\nComputador: {hostname}\nIP Corporativo: {ip}")
- 
+
     def mostrar_menu(self, event):
         menu = tk.Menu(self.root, tearoff=0)
         menu.add_command(label="Abrir", command=self.abrir_janela_info)
@@ -161,7 +161,7 @@ class WidgetIP:
             menu.tk_popup(event.x_root, event.y_root)
         finally:
             menu.grab_release()
- 
+
 def iniciar_popup():
     root = tk.Tk()
     widget = WidgetIP(root)
