@@ -7,8 +7,11 @@ from src.network.ip_checker import obter_hostname, obter_ip_redecorp, verificar_
 def resource_path(relative_path):
     """Retorna o caminho correto do recurso, mesmo empacotado no .exe"""
     if hasattr(sys, "_MEIPASS"):
-        return os.path.join(sys._MEIPASS, relative_path)
-    return os.path.join(os.path.abspath("."), relative_path)
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    
+    return os.path.join(base_path, relative_path)
 
 class WidgetIP:
     def __init__(self, root):
@@ -49,6 +52,12 @@ class WidgetIP:
     def carregar_imagem(self):
         img_path = resource_path("assets/ip_icon.png")
         try:
+            if not os.path.exists(img_path):
+                print(f"Imagem não encontrada: {img_path}")
+                self.canvas.create_text(self.size // 2, self.size // 2, text="?",
+                                        font=("Arial", 14, "bold"), fill="red")
+                return
+            
             img = Image.open(img_path).convert("RGBA")
             img = img.resize((self.size, self.size), Image.Resampling.LANCZOS)
             self.photo = ImageTk.PhotoImage(img)
@@ -91,13 +100,16 @@ class WidgetIP:
 
         img_path = resource_path("assets/ip_icon.png")
         try:
-            img = Image.open(img_path).resize((80, 80), Image.Resampling.LANCZOS)
-            img_tk = ImageTk.PhotoImage(img)
-            img_label = tk.Label(frame_titulo, image=img_tk, bg="#f5f5f5")
-            img_label.image = img_tk
-            img_label.pack()
+            if os.path.exists(img_path):
+                img = Image.open(img_path).convert("RGBA").resize((80, 80), Image.Resampling.LANCZOS)
+                img_tk = ImageTk.PhotoImage(img)
+                img_label = tk.Label(frame_titulo, image=img_tk, bg="#f5f5f5")
+                img_label.image = img_tk
+                img_label.pack()
+            else:
+                print(f"Imagem não encontrada: {img_path}")
         except Exception as e:
-            print(f"Erro ao carregar imagem: {e}")
+            print(f"Erro ao carregar imagem da janela: {e}")
 
         titulo = tk.Label(frame_titulo, text="📊 Informações da Máquina",
                           font=("Arial", 14, "bold"), bg="#f5f5f5", fg="#333")
